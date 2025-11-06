@@ -12,7 +12,7 @@ words.forEach(word => word.style.opacity = '0');
 
 function flashWord(word, duration = 1800) {
   word.style.opacity = '1';
-  if (word._timeout) clearTimeout(word._timeout);
+  clearTimeout(word._timeout);
   word._timeout = setTimeout(() => {
     word.style.opacity = '0';
   }, duration);
@@ -32,8 +32,8 @@ function handleMouse(e) {
   const speed = dist / (dt || 1);
 
   let newSize = minSize + (Math.min(speed, speedThreshold) / speedThreshold) * (maxSize - minSize);
-  newSize = Math.round(newSize);
-  root.style.setProperty('--light-size', `${newSize}px`);
+  root.style.setProperty('--light-size', `${Math.round(newSize)}px`);
+
   cursorLight.style.transform = `translate(${x}px, ${y}px)`;
 
   if (isInHero(x, y)) {
@@ -42,14 +42,34 @@ function handleMouse(e) {
       const rect = word.getBoundingClientRect();
       const wordX = rect.left + rect.width / 2;
       const wordY = rect.top + rect.height / 2;
-      const dist2 = Math.hypot(x - wordX, y - wordY);
-      if (dist2 < maxDist) flashWord(word);
+      if (Math.hypot(x - wordX, y - wordY) < maxDist) {
+        flashWord(word);
+      }
     });
   } else {
     cursorLight.style.display = 'none';
   }
 
   lastX = x; lastY = y; lastTime = now;
+}
+
+function handleTouch(e) {
+  const touch = e.touches[0];
+  const x = touch.clientX, y = touch.clientY;
+
+  root.style.setProperty('--light-size', `${maxSize}px`);
+  setTimeout(() => root.style.setProperty('--light-size', `${minSize}px`), 200);
+
+  if (isInHero(x, y)) {
+    words.forEach(word => {
+      const rect = word.getBoundingClientRect();
+      const wordX = rect.left + rect.width / 2;
+      const wordY = rect.top + rect.height / 2;
+      if (Math.hypot(x - wordX, y - wordY) < maxDist) {
+        flashWord(word);
+      }
+    });
+  }
 }
 
 function scrollToSection(id) {
@@ -66,25 +86,10 @@ function startFlickerLoop() {
   flicker();
 }
 
+document.addEventListener('click', () => scrollToSection('about'));
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
-  startFlickerLoop();
 } else {
-  document.addEventListener('touchstart', e => {
-    const x = e.touches[0].clientX;
-    const y = e.touches[0].clientY;
-    if (isInHero(x, y)) {
-      words.forEach(word => {
-        const rect = word.getBoundingClientRect();
-        const wordX = rect.left + rect.width / 2;
-        const wordY = rect.top + rect.height / 2;
-        const dist = Math.hypot(x - wordX, y - wordY);
-        if (dist < maxDist) flashWord(word);
-      });
-    }
-  });
-
-  // optional: preload subtle flashes on mobile
-  const initialWords = words.sort(() => 0.5 - Math.random()).slice(0, 4);
-  initialWords.forEach(word => flashWord(word, 2000));
+  document.addEventListener('touchstart', handleTouch);
 }
+window.addEventListener('DOMContentLoaded', startFlickerLoop);
