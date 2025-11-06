@@ -108,7 +108,7 @@ h1 {
 }
 .hidden-words span {
   position: absolute;
-  font-size: clamp(0.7rem, 1vw, 1.1rem);
+  font-size: clamp(1rem, 1.5vw, 1.4rem);
   color: white;
   opacity: 0;
   text-transform: uppercase;
@@ -120,42 +120,9 @@ h1 {
   left: calc(5% + 90% * var(--x));
 }
 @keyframes floatDrift {
-  0% {
-    opacity: 0.2;
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translateY(-15px) translateX(10px);
-  }
-  100% {
-    opacity: 0.2;
-    transform: translateY(10px) translateX(-10px);
-  }
-}
-
-/* === Scroll Button === */
-.scroll-button {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  color: rgba(255, 255, 255, 0.8);
-  padding: 0.6rem 1.2rem;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  cursor: pointer;
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-.scroll-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: white;
-  color: white;
+  0% { opacity: 0.2; transform: translateY(0) translateX(0); }
+  50% { opacity: 0.6; transform: translateY(-15px) translateX(10px); }
+  100% { opacity: 0.2; transform: translateY(10px) translateX(-10px); }
 }
 
 /* === Sections === */
@@ -167,13 +134,7 @@ h1 {
 
 /* === Responsive === */
 @media (max-width: 768px) {
-  .cursor-light {
-    display: none;
-  }
-  body {
-    cursor: default;
-  }
-  .nav-links {
-    display: none;
-  }
+  .cursor-light { display: none; }
+  body { cursor: default; }
+  .nav-links { display: none; }
 }
