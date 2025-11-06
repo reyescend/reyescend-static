@@ -83,4 +83,8 @@ if (window.innerWidth > 768) {
       });
     }
   });
+
+  // optional: preload subtle flashes on mobile
+  const initialWords = words.sort(() => 0.5 - Math.random()).slice(0, 4);
+  initialWords.forEach(word => flashWord(word, 2000));
 }
