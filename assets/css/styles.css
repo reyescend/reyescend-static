@@ -1,3 +1,7 @@
+:root {
+  --light-size: 400px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -87,17 +91,17 @@ h1 {
 /* === Cursor Light === */
 .cursor-light {
   position: fixed;
-  width: 400px;
-  height: 400px;
+  width: var(--light-size);
+  height: var(--light-size);
   pointer-events: none;
   background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(155,0,255,0.15) 40%, transparent 80%);
   border-radius: 50%;
   top: 0;
   left: 0;
-  transform: translate(-50%, -50%);
   mix-blend-mode: lighten;
   filter: blur(5px);
   z-index: 1;
+  transition: width 0.2s ease, height 0.2s ease, transform 0.08s ease;
 }
 
 /* === Hidden Words === */
@@ -110,16 +114,15 @@ h1 {
   position: absolute;
   font-size: clamp(1rem, 1.5vw, 1.4rem);
   color: white;
-  opacity: 0; /* start fully hidden */
+  opacity: 0;
   text-transform: uppercase;
   letter-spacing: 2px;
   mix-blend-mode: lighten;
-  transition: opacity 0.4s ease;
-  animation: floatMove 14s ease-in-out infinite alternate; /* movement only */
+  transition: opacity 1.2s ease;
+  animation: floatMove 14s ease-in-out infinite alternate;
   top: calc(10% + 80% * var(--y));
   left: calc(5% + 90% * var(--x));
 }
-
 @keyframes floatMove {
   0% { transform: translateY(0) translateX(0); }
   50% { transform: translateY(-15px) translateX(10px); }
