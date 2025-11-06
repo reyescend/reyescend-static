@@ -4,26 +4,27 @@ const lightSize = 500;
 const revealRadius = 250;
 let animationFrame;
 
-// Hide all words initially
+// Ensure all words start fully hidden
 words.forEach(word => {
-  word.style.opacity = 0;
+  word.style.opacity = '0';
 });
 
-// Reveal with flash + auto-hide
-function revealWord(word, duration = 1000) {
-  word.style.opacity = 1;
-  clearTimeout(word._timeout);
-  word._timeout = setTimeout(() => {
-    word.style.opacity = 0;
+// Helper: Flash word for a moment only
+function flashWord(word, duration = 800) {
+  word.style.opacity = '1';
+  clearTimeout(word._flashTimeout);
+  word._flashTimeout = setTimeout(() => {
+    word.style.opacity = '0';
   }, duration);
 }
 
-// Mouse interaction
+// Handle cursor hover reveal
 function handleMouse(e) {
   cancelAnimationFrame(animationFrame);
   animationFrame = requestAnimationFrame(() => {
     const x = e.clientX;
     const y = e.clientY;
+
     cursorLight.style.transform = `translate(${x - lightSize / 2}px, ${y - lightSize / 2 + 10}px)`;
 
     words.forEach(word => {
@@ -32,13 +33,13 @@ function handleMouse(e) {
       const wordY = rect.top + rect.height / 2;
       const dist = Math.hypot(x - wordX, y - wordY);
       if (dist < revealRadius) {
-        revealWord(word, 1000);
+        flashWord(word, 1000);
       }
     });
   });
 }
 
-// Mobile touch
+// Handle tap reveal
 function handleTouch(e) {
   const touch = e.touches[0];
   const x = touch.clientX;
@@ -50,23 +51,27 @@ function handleTouch(e) {
     const wordY = rect.top + rect.height / 2;
     const dist = Math.hypot(x - wordX, y - wordY);
     if (dist < revealRadius) {
-      revealWord(word, 1000);
+      flashWord(word, 1000);
     }
   });
 }
 
-// Random flicker
-function randomFlicker() {
-  const word = words[Math.floor(Math.random() * words.length)];
-  revealWord(word, 500 + Math.random() * 700);
-
-  setTimeout(randomFlicker, 400 + Math.random() * 1200);
+// Random star flicker
+function startFlickerLoop() {
+  const flicker = () => {
+    const word = words[Math.floor(Math.random() * words.length)];
+    flashWord(word, 400 + Math.random() * 300);
+    setTimeout(flicker, 300 + Math.random() * 700);
+  };
+  flicker();
 }
 
-// Init
+// Attach interaction listeners
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
 } else {
   document.addEventListener('touchstart', handleTouch);
 }
-randomFlicker();
+
+// Start flickering!
+startFlickerLoop();
