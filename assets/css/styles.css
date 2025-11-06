@@ -192,6 +192,7 @@ h1 {
   }
 
   .hero {
+    position: relative; /* <-- Needed for .scroll-button absolute positioning */
     min-height: 100vh;
     padding: 2rem 1rem;
     display: flex;
@@ -220,6 +221,36 @@ h1 {
     text-align: center;
   }
 
+  .scroll-button {
+    position: absolute; /* <-- Keeps it at bottom */
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+  }
+
+  .scroll-button button {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem;
+  }
+
+  .section {
+    padding: 3rem 1rem;
+  }
+
   .hidden-words {
     display: block;
     z-index: 1;
@@ -233,6 +264,7 @@ h1 {
     color: rgba(255, 255, 255, 0.3);
     text-shadow: 0 0 5px rgba(155, 0, 255, 0.2);
   }
+}
 
   .scroll-button {
     position: relative;
