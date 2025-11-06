@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REYESCEND — The Signature Experience</title>
+
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Light trail & custom cursor -->
+  <div class="cursor-light"></div>
+  <canvas id="trailCanvas"></canvas>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="title-wrap">
+      <h1>REYESCEND</h1>
+      <div class="subtitle">by Jaden Reyes</div>
+    </div>
+
+    <!-- Floating / Hidden Words -->
+    <div class="hidden-words">
+      <span style="--x:0.1; --y:0.2;">fire</span>
+      <span style="--x:0.3; --y:0.6;">royal</span>
+      <span style="--x:0.5; --y:0.4;">presence</span>
+      <span style="--x:0.8; --y:0.7;">create</span>
+      <span style="--x:0.2; --y:0.8;">ascend</span>
+      <span style="--x:0.6; --y:0.3;">vision</span>
+      <span style="--x:0.75; --y:0.1;">divine</span>
+      <span style="--x:0.9; --y:0.5;">craft</span>
+      <span style="--x:0.15; --y:0.65;">kingdom</span>
+      <span style="--x:0.45; --y:0.15;">light</span>
+      <span style="--x:0.25; --y:0.45;">faith</span>
+      <span style="--x:0.7; --y:0.25;">build</span>
+      <span style="--x:0.55; --y:0.55;">reflect</span>
+      <span style="--x:0.35; --y:0.85;">carry</span>
+      <span style="--x:0.85; --y:0.35;">truth</span>
+      <span style="--x:0.6; --y:0.8;">form</span>
+      <span style="--x:0.1; --y:0.9;">eternal</span>
+      <span style="--x:0.3; --y:0.1;">sound</span>
+      <span style="--x:0.65; --y:0.6;">rooted</span>
+      <span style="--x:0.85; --y:0.85;">grace</span>
+    </div>
+  </section>
+
+  <!-- ===== JavaScript ===== -->
+  <script src="assets/script.js"></script>
+</body>
+</html>
