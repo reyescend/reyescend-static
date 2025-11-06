@@ -1,14 +1,16 @@
 const cursorLight = document.querySelector('.cursor-light');
 const words = document.querySelectorAll('.hidden-words span');
-const maxDist = 500;  // increased distance threshold for visibility
+const maxDist = 500; // distance threshold for revealing words
 let animationFrame;
 
 function handleMouse(e) {
   cancelAnimationFrame(animationFrame);
   animationFrame = requestAnimationFrame(() => {
-    const x = e.clientX, y = e.clientY;
-    // offset by half of light size (170px) for center alignment
-    cursorLight.style.transform = `translate(${x - 170}px, ${y - 170}px)`;
+    const x = e.clientX;
+    const y = e.clientY;
+
+    // Adjusted Y by -180 to lift light slightly for better visual sync with cursor
+    cursorLight.style.transform = `translate(${x - 170}px, ${y - 180}px)`;
 
     words.forEach(word => {
       const rect = word.getBoundingClientRect();
@@ -23,7 +25,8 @@ function handleMouse(e) {
 
 function handleTouch(e) {
   const touch = e.touches[0];
-  const x = touch.clientX, y = touch.clientY;
+  const x = touch.clientX;
+  const y = touch.clientY;
 
   words.forEach(word => {
     const rect = word.getBoundingClientRect();
@@ -41,7 +44,7 @@ function handleTouch(e) {
   });
 }
 
-// Setup event listeners based on screen width
+// Enable either desktop or mobile interaction
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
 } else {
