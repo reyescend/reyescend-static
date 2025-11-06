@@ -8,7 +8,7 @@ html, body {
   height: 100%;
   width: 100%;
   background: #000;
-  font-family: 'Inter', sans‑serif;
+  font-family: 'Inter', sans-serif;
   color: white;
   overflow: hidden;
   cursor: none;
@@ -79,11 +79,11 @@ h1 {
 /* ---------- CURSOR LIGHT ---------- */
 .cursor-light {
   position: fixed;
-  width: 340px;
-  height: 340px;
+  width: 500px;
+  height: 500px;
   background: radial-gradient(circle,
-              rgba(255,255,255,0.20) 0%,
-              rgba(155,0,255,0.12) 30%,
+              rgba(255,255,255,0.25) 0%,
+              rgba(155,0,255,0.15) 30%,
               transparent 80%);
   border-radius: 50%;
   pointer-events: none;
@@ -91,7 +91,7 @@ h1 {
   mix-blend-mode: lighten;
   z-index: 2;
   filter: blur(2px);
-  transition: none; /* removed laggy transition */
+  transition: none;
 }
 
 /* ---------- HIDDEN WORDS ---------- */
@@ -107,34 +107,16 @@ h1 {
 
 .hidden-words span {
   position: absolute;
+  top: calc(10% + 80% * var(--y));
+  left: calc(5% + 90% * var(--x));
   font-size: clamp(0.7rem, 1vw, 1.1rem);
-  color: white; /* changed to ensure visibility */
+  color: white;
   opacity: 0;
+  transform: translateY(0);
   text-transform: uppercase;
   letter-spacing: 2px;
   mix-blend-mode: lighten;
-  transition: opacity 0.4s ease;
-  animation: fadeDrift 12s infinite ease-in-out alternate;
-}
-
-@keyframes fadeDrift {
-  0% {
-    opacity: 0.2;
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translateY(-15px) translateX(10px);
-  }
-  100% {
-    opacity: 0.2;
-    transform: translateY(10px) translateX(-10px);
-  }
-}
-
-.hidden-words span {
-  top: calc(10% + 80% * var(--y));
-  left: calc(5% + 90% * var(--x));
+  transition: opacity 0.3s ease;
 }
 
 /* ---------- RESPONSIVE ---------- */

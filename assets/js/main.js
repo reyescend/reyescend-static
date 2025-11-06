@@ -4,12 +4,12 @@ const lightSize = 500;
 const revealRadius = 250;
 let animationFrame;
 
-// Ensure all words start fully hidden
+// 🔒 Start hidden
 words.forEach(word => {
   word.style.opacity = '0';
 });
 
-// Helper: Flash word for a moment only
+// ✨ Flash in/out momentarily
 function flashWord(word, duration = 800) {
   word.style.opacity = '1';
   clearTimeout(word._flashTimeout);
@@ -18,7 +18,7 @@ function flashWord(word, duration = 800) {
   }, duration);
 }
 
-// Handle cursor hover reveal
+// 🖱️ Hover to reveal
 function handleMouse(e) {
   cancelAnimationFrame(animationFrame);
   animationFrame = requestAnimationFrame(() => {
@@ -39,7 +39,7 @@ function handleMouse(e) {
   });
 }
 
-// Handle tap reveal
+// 📱 Touch to reveal
 function handleTouch(e) {
   const touch = e.touches[0];
   const x = touch.clientX;
@@ -56,22 +56,22 @@ function handleTouch(e) {
   });
 }
 
-// Random star flicker
+// 🌟 Random twinkling
 function startFlickerLoop() {
   const flicker = () => {
     const word = words[Math.floor(Math.random() * words.length)];
-    flashWord(word, 400 + Math.random() * 300);
-    setTimeout(flicker, 300 + Math.random() * 700);
+    flashWord(word, 300 + Math.random() * 400);
+    setTimeout(flicker, 400 + Math.random() * 800);
   };
   flicker();
 }
 
-// Attach interaction listeners
+// 📡 Event binding
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
 } else {
   document.addEventListener('touchstart', handleTouch);
 }
 
-// Start flickering!
+// 🎬 Activate twinkles
 startFlickerLoop();
