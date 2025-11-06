@@ -1,23 +1,21 @@
-// Cursor light effect only (no trail)
+// Cursor light reveal effect
 const cursorLight = document.querySelector('.cursor-light');
+const words = document.querySelectorAll('.hidden-words span');
 
+// Track cursor
 document.addEventListener('mousemove', (e) => {
-  cursorLight.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-});
+  const x = e.clientX;
+  const y = e.clientY;
+  cursorLight.style.transform = `translate(${x}px, ${y}px)`;
 
-// Optional soft follow (uncomment for smoother movement)
-/*
-let mouseX = 0, mouseY = 0, lightX = 0, lightY = 0;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
+  words.forEach((word) => {
+    const rect = word.getBoundingClientRect();
+    const wordX = rect.left + rect.width / 2;
+    const wordY = rect.top + rect.height / 2;
+    const dist = Math.hypot(x - wordX, y - wordY);
+    const maxDist = 250; // reveal radius in px
 
-function animate() {
-  lightX += (mouseX - lightX) * 0.1;
-  lightY += (mouseY - lightY) * 0.1;
-  cursorLight.style.transform = `translate(${lightX}px, ${lightY}px)`;
-  requestAnimationFrame(animate);
-}
-animate();
-*/
+    const opacity = Math.max(0, 1 - dist / maxDist);
+    word.style.opacity = opacity;
+  });
+});
