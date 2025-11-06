@@ -3,30 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>REYESCEND</title>
-  <link rel="stylesheet" href="/assets/css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>REYESCEND — The Signature Experience</title>
+
+  <!-- Font & Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Meta -->
+  <meta name="description" content="Web design and media capture that carries atmosphere — by Jaden Reyes.">
+  <meta property="og:title" content="REYESCEND — The Signature Experience" />
+  <meta property="og:description" content="Web design and media capture that carries atmosphere." />
+  <meta property="og:type" content="website" />
 </head>
 
 <body>
+  <!-- Cursor Light + Trail -->
+  <div class="cursor-light"></div>
+  <canvas id="trailCanvas"></canvas>
+
+  <!-- Hero Section -->
   <section class="hero">
     <div class="title-wrap">
-      <h1 id="title">REYESCEND</h1>
-      <p class="subtitle">by Jaden Reyes</p>
+      <h1>REYESCEND</h1>
+      <div class="subtitle">by Jaden Reyes</div>
+    </div>
+
+    <!-- Floating Words -->
+    <div class="hidden-words">
+      <span style="--x:0.1; --y:0.2; --delay:1;">presence</span>
+      <span style="--x:0.3; --y:0.6; --delay:3;">ascend</span>
+      <span style="--x:0.5; --y:0.4; --delay:5;">faith</span>
+      <span style="--x:0.7; --y:0.3; --delay:2;">vision</span>
+      <span style="--x:0.2; --y:0.8; --delay:6;">truth</span>
+      <span style="--x:0.8; --y:0.7; --delay:4;">motion</span>
+      <span style="--x:0.4; --y:0.5; --delay:8;">capture</span>
+      <span style="--x:0.6; --y:0.1; --delay:7;">grace</span>
+      <span style="--x:0.1; --y:0.9; --delay:9;">create</span>
+      <span style="--x:0.9; --y:0.5; --delay:10;">light</span>
+      <span style="--x:0.3; --y:0.2; --delay:12;">design</span>
+      <span style="--x:0.5; --y:0.8; --delay:11;">story</span>
+      <span style="--x:0.7; --y:0.6; --delay:13;">eternal</span>
+      <span style="--x:0.2; --y:0.4; --delay:14;">build</span>
+      <span style="--x:0.8; --y:0.9; --delay:9;">reflect</span>
+      <span style="--x:0.4; --y:0.3; --delay:15;">carry</span>
+      <span style="--x:0.6; --y:0.8; --delay:16;">atmosphere</span>
     </div>
   </section>
 
-  <div class="hidden-words" id="hiddenWords">
-    <span>rise</span><span>royal</span><span>presence</span><span>create</span><span>ascend</span>
-    <span>vision</span><span>divine</span><span>craft</span><span>kingdom</span><span>light</span>
-    <span>faith</span><span>build</span><span>reflect</span><span>carry</span><span>above</span>
-    <span>truth</span><span>form</span><span>eternal</span><span>sound</span><span>rooted</span>
-    <span>fire</span><span>spirit</span><span>purpose</span><span>grace</span><span>motion</span>
-  </div>
+  <!-- Scripts -->
+  <script>
+    // Cursor light movement
+    const cursorLight = document.querySelector('.cursor-light');
+    document.addEventListener('mousemove', (e) => {
+      cursorLight.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
 
-  <div class="cursor-light" id="cursorLight"></div>
-  <canvas id="trailCanvas"></canvas>
+    // Optional trailing particle canvas (can disable for performance)
+    const canvas = document.getElementById('trailCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-  <script src="/assets/js/main.js" defer></script>
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    document.addEventListener('mousemove', (e) => {
+      particles.push({ x: e.clientX, y: e.clientY, alpha: 1 });
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        ctx.fillStyle = `rgba(155,0,255,${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        p.alpha -= 0.02;
+        if (p.alpha <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>

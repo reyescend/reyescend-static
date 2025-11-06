@@ -109,7 +109,7 @@ h1 {
   z-index: 1;
 }
 
-/* ---------- HIDDEN WORDS ---------- */
+/* ---------- HIDDEN WORDS (FADE + DRIFT) ---------- */
 .hidden-words {
   position: absolute;
   inset: 0;
@@ -123,61 +123,50 @@ h1 {
 .hidden-words span {
   position: absolute;
   font-size: clamp(0.7rem, 1vw, 1.1rem);
-  color: rgba(255, 255, 255, 0);
-  opacity: 0;
   text-transform: uppercase;
   letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0);
   mix-blend-mode: lighten;
-  transition: opacity 0.4s ease, color 0.4s ease;
-  animation: fadeDrift 12s infinite ease-in-out alternate;
+  animation: wordFloat 14s infinite ease-in-out;
+  animation-delay: calc(var(--delay, 0) * 1s);
+  opacity: 0;
 }
 
-/* drifting motion */
-@keyframes fadeDrift {
+@keyframes wordFloat {
   0% {
-    opacity: 0.2;
-    transform: translateY(0) translateX(0);
+    opacity: 0;
+    transform: translateY(10px) translateX(-5px);
+  }
+  15% {
+    opacity: 0.4;
   }
   50% {
-    opacity: 0.6;
-    transform: translateY(-15px) translateX(10px);
+    opacity: 0.7;
+    transform: translateY(-10px) translateX(10px);
+  }
+  85% {
+    opacity: 0.3;
   }
   100% {
-    opacity: 0.2;
-    transform: translateY(10px) translateX(-10px);
+    opacity: 0;
+    transform: translateY(10px) translateX(-5px);
   }
 }
 
-/* random placement logic */
+/* placement randomness */
 .hidden-words span {
   top: calc(10% + 80% * var(--y));
   left: calc(5% + 90% * var(--x));
 }
 
-/* ---------- MOBILE OPTIMIZATION ---------- */
+/* ---------- MOBILE TUNING ---------- */
 @media (max-width: 768px) {
   .hidden-words span {
     font-size: clamp(0.6rem, 2vw, 0.9rem);
     opacity: 0.25;
-    animation: fadeDriftMobile 10s infinite ease-in-out alternate;
+    animation-duration: 10s;
   }
-
-  @keyframes fadeDriftMobile {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-5px) translateX(4px);
-    }
-    100% {
-      transform: translateY(5px) translateX(-4px);
-    }
-  }
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 480px) {
   .hidden-words span:nth-child(n+15) {
-    display: none; /* hide extra words for smaller phones */
+    display: none;
   }
 }
