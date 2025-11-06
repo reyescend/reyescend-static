@@ -105,6 +105,7 @@ h1 {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
 .hidden-words span {
@@ -119,6 +120,11 @@ h1 {
   animation: floatMove 14s ease-in-out infinite alternate;
   top: calc(10% + 80% * var(--y));
   left: calc(5% + 90% * var(--x));
+  pointer-events: none;
+}
+
+.hidden-words.revealed span {
+  opacity: 1;
 }
 
 @keyframes floatMove {
@@ -265,6 +271,23 @@ h1 {
   }
 
   .hidden-words {
-    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hidden-words span {
+    font-size: 0.75rem;
+    opacity: 0;
+    animation: floatMove 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 4px rgba(155, 0, 255, 0.2);
+    transition: opacity 0.8s ease;
+  }
+
+  .hidden-words.revealed span {
+    opacity: 1;
   }
 }
