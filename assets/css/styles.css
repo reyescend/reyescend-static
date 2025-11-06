@@ -148,3 +148,57 @@ h1 {
     letter-spacing: 2px;
   }
 }
+/* ---------- SECTION STYLING ---------- */
+.section {
+  padding: 8rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.section p, .section ul {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.section ul li {
+  margin: 0.5rem 0;
+}
+
+/* ---------- FADE-IN ANIMATION ---------- */
+.section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.section.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- HIDE CURSOR LIGHT AFTER HERO ---------- */
+body:not(.in-hero) .cursor-light {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* ---------- SMOOTH SCROLL ---------- */
+html {
+  scroll-behavior: smooth;
+}
