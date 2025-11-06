@@ -1,6 +1,5 @@
 /* ==========================================
    REYESCEND — The Signature Experience
-   Designed for desktop, tablet, and mobile
 ========================================== */
 
 * {
@@ -133,40 +132,28 @@ h1 {
 }
 
 @keyframes wordFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) translateX(-5px);
-  }
-  15% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.7;
-    transform: translateY(-10px) translateX(10px);
-  }
-  85% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(10px) translateX(-5px);
-  }
+  0% {opacity: 0; transform: translateY(10px) translateX(-5px);}
+  15% {opacity: 0.4;}
+  50% {opacity: 0.7; transform: translateY(-10px) translateX(10px);}
+  85% {opacity: 0.3;}
+  100% {opacity: 0; transform: translateY(10px) translateX(-5px);}
 }
 
-/* placement randomness */
 .hidden-words span {
   top: calc(10% + 80% * var(--y));
   left: calc(5% + 90% * var(--x));
 }
 
-/* ---------- MOBILE TUNING ---------- */
+/* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
+  .cursor-light {display: none;}
+  body {cursor: default;}
+  h1 {font-size: 3rem;}
+  .subtitle {font-size: 0.9rem; letter-spacing: 2px;}
   .hidden-words span {
     font-size: clamp(0.6rem, 2vw, 0.9rem);
     opacity: 0.25;
     animation-duration: 10s;
   }
-  .hidden-words span:nth-child(n+15) {
-    display: none;
-  }
+  .hidden-words span:nth-child(n+15) {display: none;}
 }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>REYESCEND — The Signature Experience</title>
 
-  <!-- Font & Styles -->
+  <!-- Font + Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css" />
 
@@ -21,7 +21,7 @@
   <div class="cursor-light"></div>
   <canvas id="trailCanvas"></canvas>
 
-  <!-- Hero Section -->
+  <!-- HERO SECTION -->
   <section class="hero">
     <div class="title-wrap">
       <h1>REYESCEND</h1>
@@ -50,43 +50,7 @@
     </div>
   </section>
 
-  <!-- Scripts -->
-  <script>
-    // Cursor light movement
-    const cursorLight = document.querySelector('.cursor-light');
-    document.addEventListener('mousemove', (e) => {
-      cursorLight.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-
-    // Optional trailing particle canvas (can disable for performance)
-    const canvas = document.getElementById('trailCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    document.addEventListener('mousemove', (e) => {
-      particles.push({ x: e.clientX, y: e.clientY, alpha: 1 });
-    });
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        ctx.fillStyle = `rgba(155,0,255,${p.alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fill();
-        p.alpha -= 0.02;
-        if (p.alpha <= 0) particles.splice(i, 1);
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
+  <!-- JS -->
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
