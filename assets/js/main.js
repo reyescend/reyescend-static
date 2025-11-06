@@ -8,10 +8,8 @@ let lastX = 0, lastY = 0, lastTime = Date.now();
 const minSize = 300, maxSize = 600;
 const speedThreshold = 1000;
 
-// initialise word opacity hidden
 words.forEach(word => word.style.opacity = '0');
 
-// flash word function
 function flashWord(word, duration = 1800) {
   word.style.opacity = '1';
   if (word._timeout) clearTimeout(word._timeout);
@@ -20,13 +18,11 @@ function flashWord(word, duration = 1800) {
   }, duration);
 }
 
-// check pointer in hero
 function isInHero(x, y) {
   const rect = hero.getBoundingClientRect();
   return (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
 }
 
-// handle mouse movement
 function handleMouse(e) {
   const x = e.clientX, y = e.clientY;
   const now = Date.now();
@@ -38,7 +34,6 @@ function handleMouse(e) {
   let newSize = minSize + (Math.min(speed, speedThreshold) / speedThreshold) * (maxSize - minSize);
   newSize = Math.round(newSize);
   root.style.setProperty('--light-size', `${newSize}px`);
-
   cursorLight.style.transform = `translate(${x}px, ${y}px)`;
 
   if (isInHero(x, y)) {
@@ -48,9 +43,7 @@ function handleMouse(e) {
       const wordX = rect.left + rect.width / 2;
       const wordY = rect.top + rect.height / 2;
       const dist2 = Math.hypot(x - wordX, y - wordY);
-      if (dist2 < maxDist) {
-        flashWord(word, 1800);
-      }
+      if (dist2 < maxDist) flashWord(word);
     });
   } else {
     cursorLight.style.display = 'none';
@@ -59,36 +52,11 @@ function handleMouse(e) {
   lastX = x; lastY = y; lastTime = now;
 }
 
-// handle touch input
-function handleTouch(e) {
-  const touch = e.touches[0];
-  const x = touch.clientX, y = touch.clientY;
-  cursorLight.style.transform = `translate(${x}px, ${y}px)`;
-  root.style.setProperty('--light-size', `${maxSize}px`);
-  setTimeout(() => {
-    root.style.setProperty('--light-size', `${minSize}px`);
-  }, 200);
-
-  if (isInHero(x, y)) {
-    words.forEach(word => {
-      const rect = word.getBoundingClientRect();
-      const wordX = rect.left + rect.width / 2;
-      const wordY = rect.top + rect.height / 2;
-      const dist2 = Math.hypot(x - wordX, y - wordY);
-      if (dist2 < maxDist) {
-        flashWord(word, 1800);
-      }
-    });
-  }
-}
-
-// scroll to section utility
 function scrollToSection(id) {
   const section = document.getElementById(id);
   if (section) section.scrollIntoView({ behavior: 'smooth' });
 }
 
-// flicker loop for words
 function startFlickerLoop() {
   const flicker = () => {
     const word = words[Math.floor(Math.random() * words.length)];
@@ -98,10 +66,21 @@ function startFlickerLoop() {
   flicker();
 }
 
-// initialization depending on screen width
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
   startFlickerLoop();
 } else {
-  document.addEventListener('touchstart', handleTouch);
+  document.addEventListener('touchstart', e => {
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    if (isInHero(x, y)) {
+      words.forEach(word => {
+        const rect = word.getBoundingClientRect();
+        const wordX = rect.left + rect.width / 2;
+        const wordY = rect.top + rect.height / 2;
+        const dist = Math.hypot(x - wordX, y - wordY);
+        if (dist < maxDist) flashWord(word);
+      });
+    }
+  });
 }

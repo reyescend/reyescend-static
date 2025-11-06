@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>REYESCEND — The Signature Experience</title>
 
-  <!-- Preconnect & Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
@@ -25,7 +26,7 @@
     </nav>
   </header>
 
-  <!-- Cursor Light -->
+  <!-- Cursor Light (Desktop Only) -->
   <div class="cursor-light"></div>
 
   <!-- HERO Section -->
@@ -33,10 +34,6 @@
     <div class="title-wrap">
       <h1>REYESCEND</h1>
       <div class="subtitle">by Jaden Reyes</div>
-
-      <div class="scroll-button">
-        <button onclick="scrollToSection('about')">See More ↓</button>
-      </div>
     </div>
 
     <div class="hidden-words">
@@ -57,15 +54,19 @@
       <span style="--x:0.35;--y:0.15;">faith‑creation</span>
       <span style="--x:0.95;--y:0.8;">experience</span>
     </div>
+
+    <!-- Scroll Button -->
+    <div class="scroll-button">
+      <button onclick="scrollToSection('about')">See More ↓</button>
+    </div>
   </section>
 
-  <!-- ABOUT Section -->
+  <!-- Other Sections -->
   <section id="about" class="section">
     <h2>About</h2>
     <p>I’m Jaden Reyes — a creative mind behind REYESCEND. I build experiences that blend art, tech, and movement.</p>
   </section>
 
-  <!-- SERVICES Section -->
   <section id="services" class="section">
     <h2>Services</h2>
     <ul>
@@ -75,18 +76,17 @@
     </ul>
   </section>
 
-  <!-- PROJECTS Section -->
   <section id="projects" class="section">
     <h2>Projects</h2>
     <p>Coming soon: A gallery of work from brands, shoots, and digital launches.</p>
   </section>
 
-  <!-- CONTACT Section -->
   <section id="contact" class="section">
     <h2>Contact</h2>
     <p>Let’s work together! Reach me at <a href="mailto:jaden@reyescend.com">jaden@reyescend.com</a></p>
   </section>
 
+  <!-- JavaScript -->
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

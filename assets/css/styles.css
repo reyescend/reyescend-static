@@ -19,7 +19,7 @@ html, body {
   cursor: none;
 }
 
-/* === HEADER === */
+/* Header */
 .main-header {
   position: fixed;
   top: 0;
@@ -55,7 +55,7 @@ html, body {
   text-shadow: 0 0 8px var(--purple-glow);
 }
 
-/* === HERO === */
+/* Hero Section */
 .hero {
   height: 100vh;
   width: 100%;
@@ -80,11 +80,11 @@ h1 {
   background: linear-gradient(90deg, #9b00ff, #d56eff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 40px rgba(155, 0, 255, 0.6);
+  text-shadow: 0 0 40px var(--purple-glow);
   animation: steadyGlow 6s ease-in-out infinite;
 }
 @keyframes steadyGlow {
-  0%, 100% { text-shadow: 0 0 40px rgba(155, 0, 255, 0.6); }
+  0%, 100% { text-shadow: 0 0 40px var(--purple-glow); }
   50% { text-shadow: 0 0 60px rgba(155, 0, 255, 1); }
 }
 .subtitle {
@@ -93,23 +93,7 @@ h1 {
   color: var(--white-fade);
 }
 
-/* === Cursor Light === */
-.cursor-light {
-  position: fixed;
-  width: var(--light-size);
-  height: var(--light-size);
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(155,0,255,0.15) 40%, transparent 80%);
-  border-radius: 50%;
-  top: 0;
-  left: 0;
-  mix-blend-mode: lighten;
-  filter: blur(5px);
-  z-index: 1;
-  transition: width 0.2s ease, height 0.2s ease, transform 0.08s ease;
-}
-
-/* === Hidden Words === */
+/* Hidden Words */
 .hidden-words {
   position: absolute;
   inset: 0;
@@ -134,32 +118,51 @@ h1 {
   100% { transform: translateY(10px) translateX(-10px); }
 }
 
-/* === Scroll Button === */
+/* Cursor Light */
+.cursor-light {
+  position: fixed;
+  width: var(--light-size);
+  height: var(--light-size);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(155,0,255,0.15) 40%, transparent 80%);
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  mix-blend-mode: lighten;
+  filter: blur(5px);
+  z-index: 1;
+  transition: width 0.2s ease, height 0.2s ease, transform 0.08s ease;
+}
+
+/* Scroll Button */
 .scroll-button {
-  margin-top: 2rem;
-  position: relative;
-  z-index: 3;
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
 }
 .scroll-button button {
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  color: white;
-  font-size: 1.2rem;
-  padding: 0.8rem 1.6rem;
-  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  padding: 0.6rem 1.6rem;
+  border-radius: 30px;
   cursor: pointer;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px rgba(155, 0, 255, 0.2);
 }
 .scroll-button button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   border-color: white;
-  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(213, 110, 255, 0.4);
+  transform: translateY(-3px);
 }
 
-/* === Sections === */
+/* Sections */
 .section {
   padding: 6rem 2rem;
   max-width: 800px;
@@ -167,22 +170,27 @@ h1 {
   line-height: 1.6;
 }
 
-/* === Responsive === */
+/* Responsive */
 @media (max-width: 768px) {
   .cursor-light { display: none; }
   body { cursor: default; }
 
   .hidden-words {
-    display: none;
+    display: block;
+  }
+  .hidden-words span {
+    opacity: 0;
+    font-size: 0.8rem;
+    animation: none;
   }
 
   .scroll-button {
-    margin-top: 3rem;
+    bottom: 1.5rem;
   }
 
   .scroll-button button {
-    font-size: 1rem;
-    padding: 0.8rem 1.4rem;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
   }
 
   .nav-links {
