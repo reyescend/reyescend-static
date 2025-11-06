@@ -1,22 +1,18 @@
 const cursorLight = document.querySelector('.cursor-light');
 const words = document.querySelectorAll('.hidden-words span');
 const hero = document.getElementById('hero');
+const scrollBtn = document.getElementById('scrollBtn');
 const maxDist = 300;
 
 function handleMouse(e) {
   const x = e.clientX;
   const y = e.clientY;
-
-  // Position the light
   cursorLight.style.transform = `translate(${x}px, ${y}px)`;
 
-  // Check if inside hero section
   const heroRect = hero.getBoundingClientRect();
   const inHero = y >= heroRect.top && y <= heroRect.bottom;
-
   cursorLight.style.display = inHero ? 'block' : 'none';
 
-  // Reveal words near cursor
   if (inHero) {
     words.forEach(word => {
       const rect = word.getBoundingClientRect();
@@ -47,7 +43,12 @@ function handleTouch(e) {
   });
 }
 
-// Events
+// Scroll to About
+scrollBtn?.addEventListener('click', () => {
+  const about = document.getElementById('about');
+  about.scrollIntoView({ behavior: 'smooth' });
+});
+
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
 } else {
