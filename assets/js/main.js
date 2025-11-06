@@ -4,13 +4,13 @@ const lightSize = 500;
 const revealRadius = 250;
 let animationFrame;
 
-// 🔒 Start hidden
+// Initialize opacity
 words.forEach(word => {
   word.style.opacity = '0';
 });
 
-// ✨ Flash in/out momentarily
-function flashWord(word, duration = 800) {
+// Reveal with fade out
+function flashWord(word, duration = 1200) {
   word.style.opacity = '1';
   clearTimeout(word._flashTimeout);
   word._flashTimeout = setTimeout(() => {
@@ -18,13 +18,12 @@ function flashWord(word, duration = 800) {
   }, duration);
 }
 
-// 🖱️ Hover to reveal
+// Hover reveal
 function handleMouse(e) {
   cancelAnimationFrame(animationFrame);
   animationFrame = requestAnimationFrame(() => {
     const x = e.clientX;
     const y = e.clientY;
-
     cursorLight.style.transform = `translate(${x - lightSize / 2}px, ${y - lightSize / 2 + 10}px)`;
 
     words.forEach(word => {
@@ -33,13 +32,13 @@ function handleMouse(e) {
       const wordY = rect.top + rect.height / 2;
       const dist = Math.hypot(x - wordX, y - wordY);
       if (dist < revealRadius) {
-        flashWord(word, 1000);
+        flashWord(word, 1200);
       }
     });
   });
 }
 
-// 📱 Touch to reveal
+// Tap reveal
 function handleTouch(e) {
   const touch = e.touches[0];
   const x = touch.clientX;
@@ -51,27 +50,26 @@ function handleTouch(e) {
     const wordY = rect.top + rect.height / 2;
     const dist = Math.hypot(x - wordX, y - wordY);
     if (dist < revealRadius) {
-      flashWord(word, 1000);
+      flashWord(word, 1200);
     }
   });
 }
 
-// 🌟 Random twinkling
+// Random flicker loop
 function startFlickerLoop() {
   const flicker = () => {
     const word = words[Math.floor(Math.random() * words.length)];
-    flashWord(word, 300 + Math.random() * 400);
-    setTimeout(flicker, 400 + Math.random() * 800);
+    word.style.transition = 'opacity 0.6s ease';
+    flashWord(word, 1200 + Math.random() * 500);
+    setTimeout(flicker, 800 + Math.random() * 1000);
   };
   flicker();
 }
 
-// 📡 Event binding
+// Init
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
 } else {
   document.addEventListener('touchstart', handleTouch);
 }
-
-// 🎬 Activate twinkles
 startFlickerLoop();

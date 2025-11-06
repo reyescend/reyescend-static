@@ -107,8 +107,8 @@ h1 {
 
 .hidden-words span {
   position: absolute;
-  top: calc(10% + 80% * var(--y));
-  left: calc(5% + 90% * var(--x));
+  top: calc(5% + 90% * var(--y));
+  left: calc(2% + 96% * var(--x));
   font-size: clamp(0.7rem, 1vw, 1.1rem);
   color: white;
   opacity: 0;
@@ -116,7 +116,20 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 2px;
   mix-blend-mode: lighten;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.6s ease;
+  animation: floatMotion 10s ease-in-out infinite alternate;
+}
+
+@keyframes floatMotion {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  100% {
+    transform: translateY(10px) translateX(-5px);
+  }
 }
 
 /* ---------- RESPONSIVE ---------- */
