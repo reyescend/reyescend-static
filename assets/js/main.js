@@ -1,97 +1,86 @@
 const cursorLight = document.querySelector('.cursor-light');
 const words = document.querySelectorAll('.hidden-words span');
-const hero = document.getElementById('hero');
-const root = document.documentElement;
-const maxDist = 250;
+const hero = document.querySelector('#hero');
+const maxDist = 280;
 
-let lastX = 0, lastY = 0, lastTime = Date.now();
-const minSize = 300, maxSize = 600;
-const speedThreshold = 1000;
-
-words.forEach(word => word.style.opacity = '0');
-
-function flashWord(word, duration = 1800) {
-  word.style.opacity = '1';
-  clearTimeout(word._timeout);
-  word._timeout = setTimeout(() => {
-    word.style.opacity = '0';
-  }, duration);
-}
+let lastX = 0, lastY = 0;
+let lightSize = 1;
 
 function handleMouse(e) {
   const x = e.clientX;
   const y = e.clientY;
-  const now = Date.now();
+
+  // Cursor speed detection
   const dx = x - lastX;
   const dy = y - lastY;
-  const dt = now - lastTime;
-  const dist = Math.hypot(dx, dy);
-  const speed = dist / (dt || 1);
-
-  let newSize = minSize + (Math.min(speed, speedThreshold) / speedThreshold) * (maxSize - minSize);
-  newSize = Math.round(newSize);
-  root.style.setProperty('--light-size', `${newSize}px`);
-
-  cursorLight.style.transform = `translate(${x}px, ${y}px)`;
-
-  const heroRect = hero.getBoundingClientRect();
-  const inHero = y >= heroRect.top && y <= heroRect.bottom;
-  cursorLight.style.display = inHero ? 'block' : 'none';
-
-  if (inHero) {
-    words.forEach(word => {
-      const rect = word.getBoundingClientRect();
-      const wordX = rect.left + rect.width / 2;
-      const wordY = rect.top + rect.height / 2;
-      const dist = Math.hypot(x - wordX, y - wordY);
-      if (dist < maxDist) flashWord(word, 1800);
-    });
-  }
-
+  const speed = Math.sqrt(dx * dx + dy * dy);
+  lightSize = Math.min(1.5, 1 + speed / 150);
   lastX = x;
   lastY = y;
-  lastTime = now;
-}
 
-function handleTouch(e) {
-  const touch = e.touches[0];
-  const x = touch.clientX, y = touch.clientY;
-  cursorLight.style.transform = `translate(${x}px, ${y}px)`;
-  root.style.setProperty('--light-size', `${maxSize}px`);
-  setTimeout(() => {
-    root.style.setProperty('--light-size', `${minSize}px`);
-  }, 200);
+  cursorLight.style.transform = `translate(${x}px, ${y}px) scale(${lightSize})`;
+
+  if (!isInHero(x, y)) return;
 
   words.forEach(word => {
     const rect = word.getBoundingClientRect();
     const wordX = rect.left + rect.width / 2;
     const wordY = rect.top + rect.height / 2;
     const dist = Math.hypot(x - wordX, y - wordY);
-    if (dist < maxDist) flashWord(word, 1800);
+    const opacity = Math.max(0, 1 - dist / maxDist);
+    word.style.opacity = opacity;
   });
 }
 
-function handleClick() {
-  root.style.setProperty('--light-size', `${maxSize + 100}px`);
-  setTimeout(() => {
-    root.style.setProperty('--light-size', `${minSize}px`);
-  }, 200);
+function handleTouch(e) {
+  const touch = e.touches[0];
+  const x = touch.clientX;
+  const y = touch.clientY;
+
+  if (!isInHero(x, y)) return;
+
+  words.forEach(word => {
+    const rect = word.getBoundingClientRect();
+    const wordX = rect.left + rect.width / 2;
+    const wordY = rect.top + rect.height / 2;
+    const dist = Math.hypot(x - wordX, y - wordY);
+    const opacity = Math.max(0, 1 - dist / maxDist);
+    if (opacity > 0.3) {
+      word.style.opacity = opacity;
+      setTimeout(() => (word.style.opacity = 0), 1400);
+    }
+  });
 }
 
-function startFlickerLoop() {
-  const flicker = () => {
-    const word = words[Math.floor(Math.random() * words.length)];
-    flashWord(word, 2000);
-    setTimeout(flicker, 1000 + Math.random() * 800);
-  };
-  flicker();
+// Limit light to hero section
+function isInHero(x, y) {
+  const rect = hero.getBoundingClientRect();
+  return (
+    x >= rect.left &&
+    x <= rect.right &&
+    y >= rect.top &&
+    y <= rect.bottom
+  );
 }
 
-document.addEventListener('click', handleClick);
+// Flicker effect
+function flickerLoop() {
+  words.forEach(word => {
+    const flickerTime = 1000 + Math.random() * 4000;
+    const visible = Math.random() > 0.7;
+    if (!visible) {
+      word.style.opacity = 0;
+    } else {
+      word.style.opacity = 0.2 + Math.random() * 0.3;
+    }
+  });
+  setTimeout(flickerLoop, 3000);
+}
+
 if (window.innerWidth > 768) {
   document.addEventListener('mousemove', handleMouse);
 } else {
-  document.addEventListener('touchmove', handleTouch);
+  document.addEventListener('touchstart', handleTouch);
 }
 
-window.addEventListener('DOMContentLoaded', startFlickerLoop);
+flickerLoop();
