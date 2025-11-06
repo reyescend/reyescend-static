@@ -3,12 +3,10 @@ const words = document.querySelectorAll('.hidden-words span');
 const hero = document.getElementById('hero');
 const maxDist = 250;
 
-// Setup: all words hidden initially
-words.forEach(word => {
-  word.style.opacity = '0';
-});
+// Hide all words initially
+words.forEach(word => word.style.opacity = '0');
 
-// Flash visible for a moment
+// Temporarily show a word
 function flashWord(word, duration = 1000) {
   word.style.opacity = '1';
   clearTimeout(word._timeout);
@@ -17,7 +15,7 @@ function flashWord(word, duration = 1000) {
   }, duration);
 }
 
-// Cursor hover reveal
+// Mouse hover reveal
 function handleMouse(e) {
   const x = e.clientX;
   const y = e.clientY;
@@ -33,12 +31,12 @@ function handleMouse(e) {
       const wordX = rect.left + rect.width / 2;
       const wordY = rect.top + rect.height / 2;
       const dist = Math.hypot(x - wordX, y - wordY);
-      if (dist < maxDist) flashWord(word, 1200);
+      if (dist < maxDist) flashWord(word, 1000);
     });
   }
 }
 
-// Tap reveal on mobile
+// Tap reveal
 function handleTouch(e) {
   const touch = e.touches[0];
   const x = touch.clientX, y = touch.clientY;
@@ -51,12 +49,12 @@ function handleTouch(e) {
   });
 }
 
-// Flicker loop
+// Random flicker (off → on → off)
 function startFlickerLoop() {
   const flicker = () => {
     const word = words[Math.floor(Math.random() * words.length)];
-    flashWord(word, 800 + Math.random() * 700);
-    setTimeout(flicker, 600 + Math.random() * 1000);
+    flashWord(word, 600 + Math.random() * 800);
+    setTimeout(flicker, 700 + Math.random() * 1200);
   };
   flicker();
 }
@@ -67,4 +65,5 @@ if (window.innerWidth > 768) {
 } else {
   document.addEventListener('touchstart', handleTouch);
 }
+
 window.addEventListener('DOMContentLoaded', startFlickerLoop);
