@@ -7,7 +7,7 @@ const maxDist = 250;
 words.forEach(word => word.style.opacity = '0');
 
 // Temporarily show a word
-function flashWord(word, duration = 1000) {
+function flashWord(word, duration = 1800) {
   word.style.opacity = '1';
   clearTimeout(word._timeout);
   word._timeout = setTimeout(() => {
